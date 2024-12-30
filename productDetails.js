@@ -9,7 +9,7 @@ const getparams = () => {
         .then((data) => displayDetails(data));
 };
 
-// Fetch and display reviews
+
 const getReviewData = () => {
     const param = new URLSearchParams(window.location.search).get("productId");
     fetch(`https://elisiyan.onrender.com/product/reviews/?productId=${param}`)
@@ -78,7 +78,7 @@ const displayDetails = (service) => {
     });
 };
 
-// show the buy form as a modal
+
 const showBuyForm = (product) => {
     const modal = document.createElement('div');
     modal.id = 'buy-modal';
@@ -116,7 +116,7 @@ const showBuyForm = (product) => {
     });
 };
 
-// Function to generate PDF after form submission
+
 const generatePDF = (product) => {
     const name = document.getElementById("name").value;
     const phone = document.getElementById("phone").value;
@@ -146,15 +146,13 @@ if (typeof jsPDF === 'undefined') {
     console.error('jsPDF is not available!');
 }
 
-// Function to check if a user is logged in
 const isUserLoggedIn = () => {
-    // Implement logic to check if the user is logged in
-    // Example using localStorage or cookies:
+
     const userToken = localStorage.getItem('userToken');
     return userToken !== null;
 };
 
-// Function to add product to wishlist
+
 const addToWishlist = (productId) => {
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 

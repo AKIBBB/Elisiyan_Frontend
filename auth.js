@@ -158,8 +158,6 @@ const handleLogout = () => {
         console.log(data);
         localStorage.removeItem("token");
         localStorage.removeItem("user_id");
-
-        // Show success message
         const successMessage = document.createElement('div');
         successMessage.textContent = "Successfully logged out!";
         successMessage.style.position = 'fixed';
@@ -170,8 +168,6 @@ const handleLogout = () => {
         successMessage.style.padding = '10px';
         successMessage.style.borderRadius = '5px';
         document.body.appendChild(successMessage);
-
-        // Hide the message after 3 seconds
         setTimeout(() => {
             successMessage.style.display = 'none';
         }, 3000);
