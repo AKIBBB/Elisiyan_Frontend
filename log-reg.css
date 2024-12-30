@@ -1,0 +1,51 @@
+body{
+    background-color: white;
+}
+#title{
+    margin-top: 90px;
+    color: rgb(31, 48, 43);
+}
+#log-title{
+    color: rgb(31, 48, 43);
+}
+.login-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+.input{
+    padding: 15px 25px;
+    border: none;
+    margin: 20px;
+    box-shadow: 4px 4px 8px darkcyan;
+    border-radius: 5px;
+}
+
+.submit-btn{
+    padding: 15px 5px;
+    width: 50%;
+    border: none;
+    margin: auto;
+    color: rgb(155, 42, 42);
+    background-color: rgb(26, 12, 39);
+    font-size: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+    
+
+}
+.title{
+    color: blueviolet;
+}
+.omuk{
+    padding-left: 180px;
+}
+.flexing{
+    display: flex;
+    gap: 50px;
+    margin-top: 10px;
+}

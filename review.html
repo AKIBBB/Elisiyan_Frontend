@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elisiyan</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    /> 
+    <link rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header">
+        <ul class="navbar-r">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </header>
+    
+    <div id="review-container">
+        <h2>Coustomer Reviews</h2>
+    </div>
+    <div id="create-review">
+        <h2>Write a Review</h2>
+        <form id="review-form">
+            <label for="comment">Comment:</label><br>
+            <textarea id="comment" required></textarea><br><br>
+    
+            <label for="rating">Rating:</label><br>
+            <select id="rating" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select><br><br>
+    
+            <button type="submit">Submit Review</button>
+        </form>
+        <div id="review-success" style="display:none; color:rgb(127, 129, 96);">Review submitted successfully!</div>
+    </div>
+    
+
+    <script src="review.js"></script>
+</body>
+</html>
