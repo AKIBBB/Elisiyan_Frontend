@@ -144,22 +144,39 @@ UserRegistration();
 
 // abcd1234%A
 
-const handleLogout=()=>{
-    const token=localStorage.getItem('token');
-    fetch("https://elisiyan.onrender.com/users/logout/",{
-        method:"GET" ,
+const handleLogout = () => {
+    const token = localStorage.getItem('token');
+    fetch("https://elisiyan.onrender.com/users/logout/", {
+        method: "GET",
         headers: {
-            "Authorizatiob": `Token ${token}`,
+            "Authorization": `Token ${token}`,
             "Content-Type": "application/json"
         }
-    
     })
     .then(res => res.json())
-    .then((data)=>{
+    .then((data) => {
         console.log(data);
         localStorage.removeItem("token");
         localStorage.removeItem("user_id");
-    });
-   
+
+        // Show success message
+        const successMessage = document.createElement('div');
+        successMessage.textContent = "Successfully logged out!";
+        successMessage.style.position = 'fixed';
+        successMessage.style.top = '10px';
+        successMessage.style.right = '10px';
+        successMessage.style.backgroundColor = 'green';
+        successMessage.style.color = 'white';
+        successMessage.style.padding = '10px';
+        successMessage.style.borderRadius = '5px';
+        document.body.appendChild(successMessage);
+
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 3000);
+    })
+    .catch(error => console.log('Error:', error));
 };
+
 

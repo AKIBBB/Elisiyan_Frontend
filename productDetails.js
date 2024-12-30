@@ -1,4 +1,3 @@
-
 const getparams = () => {
     const param = new URLSearchParams(window.location.search).get("productId");
     if (!param) {
@@ -71,7 +70,11 @@ const displayDetails = (service) => {
 
     const buyButton = div.querySelector("#buy");
     buyButton.addEventListener("click", () => {
-        showBuyForm(service);
+        if (isUserLoggedIn()) {
+            showBuyForm(service);
+        } else {
+            alert("Please log in to buy the product.");
+        }
     });
 };
 
@@ -84,33 +87,32 @@ const showBuyForm = (product) => {
         <div class="modal-content">
             <span class="close-btn" id="close-modal">&times;</span>
             <h3>Enter your details to purchase</h3>
-                       <form id="purchase-form">
-<label for="name">Name:</label>
-<input type="text" id="name" required><br><br>
-<label for="phone">Phone Number:</label>
-<input type="text" id="phone" required><br><br>
-<label for="address">Address:</label>
-<textarea id="address" required></textarea><br><br>
-<button type="submit">Submit</button>
-</form>
-
+            <form id="purchase-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required><br><br>
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" required><br><br>
+                <label for="address">Address:</label>
+                <textarea id="address" required></textarea><br><br>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     `;
 
-    document.body.appendChild(modal);  
+    document.body.appendChild(modal);
     modal.style.display = 'block';
     const closeModalBtn = document.getElementById('close-modal');
     closeModalBtn.addEventListener('click', () => {
         modal.style.display = 'none';
-        modal.remove(); 
+        modal.remove();
     });
 
     const form = document.getElementById('purchase-form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         generatePDF(product);
-        modal.style.display = 'none'; 
-        modal.remove();  
+        modal.style.display = 'none';
+        modal.remove();
     });
 };
 
@@ -140,11 +142,17 @@ const generatePDF = (product) => {
     doc.save(`purchase-receipt-${product.id}.pdf`);
 };
 
-
 if (typeof jsPDF === 'undefined') {
     console.error('jsPDF is not available!');
 }
 
+// Function to check if a user is logged in
+const isUserLoggedIn = () => {
+    // Implement logic to check if the user is logged in
+    // Example using localStorage or cookies:
+    const userToken = localStorage.getItem('userToken');
+    return userToken !== null;
+};
 
 // Function to add product to wishlist
 const addToWishlist = (productId) => {
@@ -167,6 +175,7 @@ const addToWishlist = (productId) => {
 };
 
 getparams();
+
 
 
 
