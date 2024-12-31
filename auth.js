@@ -120,33 +120,3 @@ window.onload = () => {
     }
 };
 
-const handleLogout = () => {
-    const token = localStorage.getItem('token');
-    fetch("https://elisiyan.onrender.com/users/logout/", {
-        method: "GET",
-        headers: {
-            "Authorization": `Token ${token}`,
-            "Content-Type": "application/json",
-        },
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            localStorage.removeItem("token");
-            localStorage.removeItem("user_id");
-            const successMessage = document.createElement("div");
-            successMessage.textContent = "Successfully logged out!";
-            successMessage.style.position = "fixed";
-            successMessage.style.top = "10px";
-            successMessage.style.right = "10px";
-            successMessage.style.backgroundColor = "green";
-            successMessage.style.color = "white";
-            successMessage.style.padding = "10px";
-            successMessage.style.borderRadius = "5px";
-            document.body.appendChild(successMessage);
-            setTimeout(() => {
-                successMessage.style.display = "none";
-            }, 3000);
-        })
-        .catch((error) => console.log("Error:", error));
-};
