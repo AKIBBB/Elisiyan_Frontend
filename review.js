@@ -49,8 +49,17 @@ document.getElementById("review-form").addEventListener("submit", function (e) {
     const comment = document.getElementById("comment").value;
     const rating = document.getElementById("rating").value;
 
+    // Check if the user is logged in by looking for the token
+    const token = localStorage.getItem("token");
+    console.log("Token from localStorage:", token);
 
-    const token = localStorage.getItem("authToken"); 
+    // If the token is not found, show the message and return
+    if (!token) {
+        showMessage("You need to log in to submit a review.");
+        return;
+    }
+
+    // Create a message box for feedback to the user
     const messageBox = document.createElement("div");
     messageBox.id = "message-box";
     messageBox.style.display = "none";
@@ -74,16 +83,12 @@ document.getElementById("review-form").addEventListener("submit", function (e) {
         }, 5000);
     };
 
-    if (!token) {
-        showMessage("You need to log in to submit a review.");
-        return;
-    }
-
+    // Send the review data to the backend if the token is present
     fetch("https://elisiyan.onrender.com/product/reviews/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` 
+            "Authorization": `Bearer ${token}`  // Send the token in the Authorization header
         },
         body: JSON.stringify({
             clothing_item: clothingItemId,
@@ -91,21 +96,20 @@ document.getElementById("review-form").addEventListener("submit", function (e) {
             rating: parseInt(rating, 10)
         })
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Failed to submit review");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            console.log("Review submitted:", data);
-            showMessage("Review submitted successfully!", true);
-            document.getElementById("review-form").reset();
-            getReviewData();
-        })
-        .catch((error) => {
-            console.error("Error submitting review:", error);
-            showMessage("Failed to submit review. Please try again.");
-        });
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Failed to submit review");
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log("Review submitted:", data);
+        showMessage("Review submitted successfully!", true);
+        document.getElementById("review-form").reset();
+        getReviewData();
+    })
+    .catch((error) => {
+        console.error("Error submitting review:", error);
+        showMessage("Failed to submit review. Please try again.");
+    });
 });
-

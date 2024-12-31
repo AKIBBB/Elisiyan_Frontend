@@ -1,45 +1,62 @@
-const displayWishlist = () => {
+document.addEventListener("DOMContentLoaded", () => {
     const wishlistContainer = document.getElementById("wishlist-container");
-    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
     if (wishlist.length === 0) {
-        wishlistContainer.innerHTML = "<p>Your wishlist is empty.</p>";
-        return;
+        displayEmptyWishlistMessage();
+    } else {
+        displayWishlistItems(wishlist);
     }
+});
 
-    wishlistContainer.innerHTML = ""; 
+const displayWishlistItems = (wishlist) => {
+    const wishlistContainer = document.getElementById("wishlist-container");
 
+    wishlistContainer.innerHTML = ""; // Clear previous content
     wishlist.forEach(productId => {
         fetch(`https://elisiyan.onrender.com/product/clothing/${productId}/`)
             .then(res => res.json())
             .then(product => {
-                const div = document.createElement("div");
-                div.classList.add("wishlist-item");
-                div.innerHTML = `
-                    <div class="product-details">
-                        <img src="${product.image || 'default-image.jpg'}" alt="${product.name}">
-                        <p>Name:${product.name}</p>
-                        <p>Description:${product.description}</p>
-                        <p>Price:${product.price}</p>
-                        <button class="remove">Remove</button>
+                const productDiv = document.createElement("div");
+                productDiv.classList.add("wishlist-item");
+
+                productDiv.innerHTML = `
+                    <div class="product-box">
+                        <img src="${product.image || 'default-image.jpg'}" alt="${product.name || 'Product'}">
+                        <p>${product.name || 'Product Name'}</p>
+                        <p>Price: ${product.price || 'N/A'}</p>
+                        <button class="remove-btn" data-product-id="${productId}">Remove</button>
                     </div>
                 `;
-                
-                // Add event listener to the remove button
-                const removeButton = div.querySelector(".remove");
-                removeButton.addEventListener("click", () => {
-                    // Remove the productId from the wishlist
-                    const updatedWishlist = wishlist.filter(id => id !== productId);
-                    // Update the wishlist in localStorage
-                    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-                    // Re-display the wishlist
-                    displayWishlist();
-                });
 
-                wishlistContainer.appendChild(div);
+                wishlistContainer.appendChild(productDiv);
+
+                const removeButton = productDiv.querySelector(".remove-btn");
+                removeButton.addEventListener("click", () => removeFromWishlist(productId));
             })
-            .catch(err => console.error('Error fetching wishlist product:', err));
+            .catch(err => console.error(`Error fetching product ${productId}:`, err));
     });
 };
 
-window.onload = displayWishlist;
+const removeFromWishlist = (productId) => {
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    wishlist = wishlist.filter(id => id !== productId);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+    const wishlistContainer = document.getElementById("wishlist-container");
+    if (wishlist.length === 0) {
+        displayEmptyWishlistMessage();
+    } else {
+        displayWishlistItems(wishlist);
+    }
+};
+
+const displayEmptyWishlistMessage = () => {
+    const wishlistContainer = document.getElementById("wishlist-container");
+    wishlistContainer.innerHTML = `
+        <div class="empty-wishlist">
+            <p>Your wishlist is empty.</p>
+        </div>
+    `;
+};
+

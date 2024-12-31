@@ -677,3 +677,42 @@ h1, h2 {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 }
+
+
+.wishlist {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wishlist-item {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-box img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.remove-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.empty-wishlist {
+    text-align: center;
+    font-size: 18px;
+    color: gray;
+    margin-top: 20px;
+}

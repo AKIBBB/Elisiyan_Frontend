@@ -53,9 +53,9 @@ const displayDetails = (service) => {
         </div>
         <div class="Button">
             <button class="buy" id="add-to-wishlist" data-product-id="${service.id}">Add To Wishlist</button>
-            <a href="review.html?productId=${service.id}">
-                <p><button class="buy" id="review">Review</button></p>
-            </a>
+            <p>
+                <button class="buy" id="review">Review</button>
+            </p>
             <button class="buy" id="buy">Buy</button>
         </div>
         <div id="wishlist-success-message" style="display:none; color: green;">Added to wishlist successfully!</div>
@@ -68,6 +68,15 @@ const displayDetails = (service) => {
         addToWishlist(productId);
     });
 
+    const reviewButton = div.querySelector("#review");
+    reviewButton.addEventListener("click", () => {
+        if (isUserLoggedIn()) {
+            window.location.href = `review.html?productId=${service.id}`;
+        } else {
+            alert("Please log in to review the product.");
+        }
+    });
+
     const buyButton = div.querySelector("#buy");
     buyButton.addEventListener("click", () => {
         if (isUserLoggedIn()) {
@@ -77,6 +86,8 @@ const displayDetails = (service) => {
         }
     });
 };
+
+
 
 
 const showBuyForm = (product) => {
@@ -147,13 +158,19 @@ if (typeof jsPDF === 'undefined') {
 }
 
 const isUserLoggedIn = () => {
-
-    const userToken = localStorage.getItem('userToken');
+    const userToken = localStorage.getItem('token');  
     return userToken !== null;
 };
 
 
+
 const addToWishlist = (productId) => {
+    // Check if the user is logged in
+    if (!isUserLoggedIn()) {
+        alert("Please log in to add products to your wishlist.");
+        return; // Stop the function if the user is not logged in
+    }
+
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
     if (!wishlist.includes(productId)) {
@@ -171,6 +188,7 @@ const addToWishlist = (productId) => {
         console.log("Product is already in the wishlist.");
     }
 };
+
 
 getparams();
 
