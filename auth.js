@@ -120,3 +120,43 @@ window.onload = () => {
     }
 };
 
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    handleLogout();
+});
+
+function handleLogout() {
+    const token = localStorage.getItem('token'); 
+    console.log(token);
+
+    if (!token) {
+        alert('No token found. You are already logged out.');
+        window.location.href = 'index.html';
+        return;
+    }
+
+    fetch('https://elisiyan.onrender.com/users/logout/', {
+        method: 'POST',
+        headers: {
+            Authorization: `Token ${token}`, 
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data.message);
+        if (data.message === 'Logout successful') {
+            console.log("Logged out successfully");
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_id');
+            alert('Logout successful');
+            window.location.href = 'index.html';
+        } else {
+            alert('Logout failed: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
