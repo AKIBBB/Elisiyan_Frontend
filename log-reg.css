@@ -38,6 +38,18 @@ body{
     
 
 }
+.submit-btnn{
+    padding: 15px 1px;
+    width: 30%;
+    border: none;
+    margin: auto;
+    color: rgb(155, 42, 42);
+    background-color: rgb(26, 12, 39);
+    font-size: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+    
+}
 .title{
     color: blueviolet;
 }
