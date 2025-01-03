@@ -165,10 +165,9 @@ const isUserLoggedIn = () => {
 
 
 const addToWishlist = (productId) => {
-    // Check if the user is logged in
     if (!isUserLoggedIn()) {
         alert("Please log in to add products to your wishlist.");
-        return; // Stop the function if the user is not logged in
+        return; 
     }
 
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];

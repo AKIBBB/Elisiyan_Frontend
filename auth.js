@@ -121,32 +121,37 @@ window.onload = () => {
 };
 
 
-document.getElementById('logoutButton').addEventListener('click', function() {
+document.getElementById('logoutButton').addEventListener('click', function () {
     handleLogout();
 });
 
 function handleLogout() {
     const token = localStorage.getItem('token'); 
-    console.log(token);
+    console.log('Token:', token);
 
     if (!token) {
         alert('No token found. You are already logged out.');
         window.location.href = 'index.html';
         return;
     }
+    const authHeader = `Token ${token}`;
 
     fetch('https://elisiyan.onrender.com/users/logout/', {
         method: 'POST',
         headers: {
-            Authorization: `Token ${token}`, 
+            Authorization: authHeader, 
             'Content-Type': 'application/json',
         },
     })
-    .then(res => res.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
-        console.log(data.message);
-        if (data.message === 'Logout successful') {
-            console.log("Logged out successfully");
+        console.log('Response:', data);
+        if (data.message && data.message.toLowerCase().includes('logged out')) {
             localStorage.removeItem('token');
             localStorage.removeItem('user_id');
             alert('Logout successful');
@@ -159,4 +164,5 @@ function handleLogout() {
         console.error('Error:', error);
         alert('An error occurred. Please try again.');
     });
-}
+};
+
