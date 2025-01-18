@@ -89,23 +89,34 @@ const handleLogin = (event) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 if (data.token && data.user_id) {
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("user_id", data.user_id);
-                    displayMessage("Logged in successfully!", "success");
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 3000);
+
+                    if (data.role === "admin" || data.role === "staff") {
+                        displayMessage("Welcome Admin/Staff!", "success");
+                        setTimeout(() => {
+                            window.location.href = "admin_interface.html"; // Redirect for admin
+                        }, 2000);
+                    } else {
+                        displayMessage("Logged in successfully!", "success");
+                        setTimeout(() => {
+                            window.location.href = "index.html"; // Redirect for regular users
+                        }, 2000);
+                    }
                 } else {
-                    alert("Login failed. Check your username and password.");
+                    displayMessage("Login failed. Check your username and password.", "error");
                 }
             })
-            .catch((error) => console.error("Error:", error));
+            .catch((error) => {
+                console.error("Error:", error);
+                displayMessage("An error occurred. Please try again later.", "error");
+            });
     } else {
         displayMessage("Please fill in both fields.", "error");
     }
 };
+
 
 window.onload = () => {
     const loginForm = document.querySelector("#login-form");
