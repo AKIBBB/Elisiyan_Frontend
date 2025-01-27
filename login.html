@@ -21,7 +21,7 @@
         <div class="col-md-6">
             <h2 id="log-title" class="title mt-4 text-center">Enter valid information to login</h2>
 
-            <form onsubmit="handleLogin(event)">
+            <form id="login-form" onsubmit="handleLogin(event)">
                 <input id="login-username" type="text" class="input" placeholder="User name" required />
                 <input id="login-password" type="password" class="input" placeholder="Password" required />
                 <br>
@@ -31,6 +31,8 @@
                 </div>
             </form>
             
+
+            <div id="message-box" class="message"></div>
         </div>
         <div class="col-md-6">
             <img class="" src="images/undraw_enter_nwx3.png" style="width: 400px; height: auto;" alt="Login Image">
